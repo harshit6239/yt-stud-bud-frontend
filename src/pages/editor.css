@@ -1,0 +1,120 @@
+
+*{
+    background-color: #444444;
+    color: white;
+}
+.container{
+    display: flex;
+    height: 95vh;
+    width: 98vw;
+    padding: 0;
+    margin: 0;
+}
+.left{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    /* background-color: aqua; */
+}
+.right{
+    height: 100%;
+    width: 50%;
+    background-color: #444444;
+}
+textarea{
+    resize: none;
+    width: 100%;
+    padding: 1rem;
+}
+textarea:focus{
+    outline: none;
+}
+.editorBox{
+    margin-left: 10px;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.editorBox *{
+    background-color: #eee;
+    color: black;
+}
+.ql-editor{
+    height: 78.5vh;
+    max-height: 78.5vh;
+    overflow: auto;
+    font-size: 16px;
+}
+#title{
+    font-size: 2rem;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-bottom: 1px solid white;
+}
+#title:focus{
+    outline: none;
+}
+iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+}
+.frame{
+    width: 100%;
+    height: calc(100%*(315/560));
+}
+.ai{
+    width: 100%;
+    height: calc(100%*(245/560));
+    display: flex;
+    flex-direction: column;
+}
+.searchBox{
+    margin: 1rem 0;
+    display: flex;
+    width: 100%;
+    height: 25%;
+    justify-content: space-between;
+    padding: 0.2rem;
+}
+#searchQuery{
+    width: 90%;
+    height: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+.searchBox button{
+    height: 100%;
+    padding: 0.5rem 1rem;
+    color: black;
+    background-color: white;
+    border: none;
+    border-radius: 20%;
+}
+.queries{
+    overflow-y: scroll;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #eee;
+}
+.queries *{
+    background-color: #eee;
+    color: black;
+}
+.queries .query{
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+}
+.queries .response{
+    padding-left: 1rem;
+}
+.qna{
+    padding: 0.5rem;
+    border-bottom: 1px solid black;
+}
+
