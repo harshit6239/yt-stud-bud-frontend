@@ -14,15 +14,15 @@ function editor() {
   const [ title, setTitle ] = useState('');
   const [ aiHistory, setAiHistory ] = useState([]);
 
-  useEffect(()=>{
-    console.log(vid);
-    axios({
-      url: `http://localhost:3000/ytframe/${vid}`,
-      method: "GET",
-  }).then((res) => {
-    frameRef.current.innerHTML = res.data;
-  }).catch((err) => {});
-  },[]);
+  // useEffect(()=>{
+  //   console.log(vid);
+  //   axios({
+  //     url: `http://localhost:3000/ytframe/${vid}`,
+  //     method: "GET",
+  // }).then((res) => {
+  //   frameRef.current.innerHTML = res.data;
+  // }).catch((err) => {});
+  // },[]);
 
   const handleTitle = (e) => {
     if(e.target.value.includes('\n')) {
@@ -72,7 +72,9 @@ function editor() {
   return (
     <div className="container" onKeyUp={jumpToAi}>
             <div className="left">
-              <div className="frame" ref={frameRef}></div>
+              <div className="frame" >
+              <iframe ref={frameRef} width="560" height="315" src={"https://www.youtube.com/embed/"+vid}  allowFullScreen></iframe>
+              </div>
               <div className="ai">
                 <div className="searchBox">
                   <textarea name="searchQuery" id="searchQuery" rows="1" placeholder='Search you Query here(enter to search and shift+enter for new line)
@@ -91,13 +93,12 @@ Type "clear()" to clear the box below' onKeyUp={handleAiSearchBox} ref={aiRef}><
                     onChange={handleTitle} value={title}>
                     </textarea>
                     <div className="editor">
-                    <ReactQuill id='reactEditor' theme="snow" value={data} onChange={setData} placeholder='write something
+                      <ReactQuill id='reactEditor' theme="snow" value={data} onChange={setData} placeholder='write something
 (press ctrl + / to jump to ai box)'/>
                     </div>
                 </div>
-
-                </div>
             </div>
+        </div>
   )
 }
 

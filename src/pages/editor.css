@@ -95,6 +95,10 @@ iframe{
     background-color: white;
     border: none;
     border-radius: 20%;
+    cursor: pointer;
+}
+.searchBox button:hover{
+    background-color: #eee;
 }
 .queries{
     overflow-y: scroll;
