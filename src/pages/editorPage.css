@@ -1,26 +1,20 @@
 
-*{
-    background-color: #444444;
-    color: white;
-}
 .container{
     display: flex;
-    height: 95vh;
+    height: 92vh;
     width: 98vw;
     padding: 0;
     margin: 0;
 }
-.left{
+.EditorPageLeft{
     height: 100%;
     width: 50%;
     display: flex;
     flex-direction: column;
-    /* background-color: aqua; */
 }
-.right{
+.EditorPageRight{
     height: 100%;
     width: 50%;
-    background-color: #444444;
 }
 textarea{
     resize: none;
@@ -34,27 +28,7 @@ textarea:focus{
     margin-left: 10px;
     height: 100%;
     border: none;
-    border-radius: 12px;
-    overflow: hidden;
-}
-.editorBox *{
-    background-color: #eee;
-    color: black;
-}
-.ql-editor{
-    height: 78.5vh;
-    max-height: 78.5vh;
-    overflow: auto;
-    font-size: 16px;
-}
-#title{
-    font-size: 2rem;
-    padding: 1rem 1.5rem;
-    border: none;
-    border-bottom: 1px solid white;
-}
-#title:focus{
-    outline: none;
+    overflow: scroll;
 }
 iframe{
     width: 100%;
@@ -71,44 +45,52 @@ iframe{
     height: calc(100%*(245/560));
     display: flex;
     flex-direction: column;
+    margin-top: 1rem;
 }
 .searchBox{
     margin: 1rem 0;
     display: flex;
     width: 100%;
-    height: 25%;
+    height: 30%;
     justify-content: space-between;
     padding: 0.2rem;
 }
+.searchBox button{
+    height: 100%;
+}
 #searchQuery{
-    width: 90%;
     height: 100%;
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
-    border: 2px solid white;
-    border-radius: 10px;
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+    background-color: #1f1f1f;
+    color: white;
 }
-.searchBox button{
-    height: 100%;
-    padding: 0.5rem 1rem;
+button{
+    height: max-content;
+    width: max-content;
+    padding: 0.75rem 1.25rem;
     color: black;
     background-color: white;
     border: none;
-    border-radius: 20%;
+    border-radius: 0.5rem;
     cursor: pointer;
 }
-.searchBox button:hover{
+button:hover{
     background-color: #eee;
 }
 .queries{
     overflow-y: scroll;
     height: 100%;
     border-radius: 10px;
-    background-color: #eee;
+    border: 1px solid white;
+    background-color: #1f1f1f;
 }
 .queries *{
-    background-color: #eee;
-    color: black;
+    background-color: #1f1f1f;
+    color: white;
 }
 .queries .query{
     font-weight: bold;
@@ -119,6 +101,7 @@ iframe{
 }
 .qna{
     padding: 0.5rem;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid white;
 }
+
 

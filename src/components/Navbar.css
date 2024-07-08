@@ -1,0 +1,9 @@
+.navbar{
+    height: 7vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    height: 5vh;
+}

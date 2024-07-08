@@ -1,5 +1,22 @@
+@font-face {
+  font-family: 'inter';
+  src: url("/src/assets/fonts/Inter.ttf") format("truetype");
+}
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'inter', sans-serif;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1f1f1f;
+  color: white;
+}
+button:hover{
+  cursor: pointer;
+  transform: translateY(-2px) scale(1.05);    
 }

@@ -1,0 +1,103 @@
+.signUpPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+
+}
+.logo{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.logo img{
+    height: 5vh;
+}
+.signUpContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+    width: 50%;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    overflow: hidden;
+}
+.signUpPageRight{
+    padding: 20px;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.signUpPageLeft{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid black;
+    background-image: url("/signUpPageIllustration.webp");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.signUpPageRight h1{
+    width: 100%;
+}
+#get{
+    font-size: 1.5rem;
+}
+#started{
+    font-size: 3rem;
+    font-weight: 700;
+}
+.signUpPageRight form{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+.signUpPageRight form input{
+    background-color: white;
+    color: black;
+    border-radius: 0px;
+    border: 1px solid black;
+}
+.signUpPageRight form input:focus{
+    border-left: 10px solid rgb(70, 70, 70) ;
+
+}
+.signUpPageRight form button{
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.265);
+}
+.signUpPageRight form .btns{
+    display: flex;
+    gap: 1rem;
+}
+#loginBtn{
+    background-color: white;
+    color: black;
+}
+#signUpBtn{
+    background-color: black;
+    color: white;
+}
+.connectLinks{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: end;
+    gap: 1rem;
+}
+.connectLinks a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.1rem;
+}
