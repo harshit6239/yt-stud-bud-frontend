@@ -1,53 +1,30 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useLayoutEffect, useState, useRef } from 'react'
 import { useParams } from "react-router-dom";
 import Markdown from 'markdown-to-jsx';
 import { search } from '../api/gemini';
+import { getNote } from '../api/getNote';
 import Editor from '../components/Editor';
 import toast, { Toaster } from 'react-hot-toast';
 import './editorPage.css'; 
+import useNoteFetch from '../hooks/useNoteFetch';
 
 function editorPage() {
   const aiRef = useRef(null);
   const playerRef = useRef(null);
-  const { vid } = useParams();
-  const [ videoDuration, setVideoDuration ] = useState(0);
-  const [ player, setPlayer ] = useState(null);
-  const [ data, setData ] = useState('');
+  const { id } = useParams();
+  const { loading, vid, content, error, update, updateLoading, updateError } = useNoteFetch(id);
   const [ aiHistory, setAiHistory ] = useState([]);
-  const [ videoError, setVideoError ] = useState(false);
 
-  const tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  const firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  function ytIframeApi() {
-    window.onYouTubeIframeAPIReady = () => {
-      const newPlayer = new YT.Player(playerRef.current, {
-        height: '315',
-        width: '560',
-        videoId: vid,
-        events: {
-          'onReady': (e) => {
-            e.target.seekTo(0);
-            setVideoDuration(e.target.getDuration());
-          },
-          'onError': (e) => {
-            setVideoError(true);
-            toast.error('Video not found, editor will not work for this page', {
-              position: 'top-right',
-            });
-          }
-        }
+  if(error){
+    if(error.message === "Invalid token"){
+      navigate('/login');
+    }
+    else{
+      toast.error('error while fetching notes please try again', {
+        position: 'top-right',
       });
-      setPlayer(newPlayer);
-    };
-  };
-
-  useEffect(() => {
-    ytIframeApi();
-  },[vid]);
-
+    }
+  }
 
   const handleAiSearchBox = (e) => {
     if(e.key === 'Enter' & e.shiftKey === false) {
@@ -70,7 +47,6 @@ function editorPage() {
       return;
     }
     const obj = await search(query);
-    console.log(obj);
     setAiHistory((oldHist)=>[...oldHist,obj]);
   }
 
@@ -78,7 +54,7 @@ function editorPage() {
     <div className="container" onKeyUp={jumpToAi}>
             <div className="EditorPageLeft">
               <div className="frame" ref={playerRef}>
-                <iframe width="560" height="315" src={"https://www.youtube.com/embed/"+vid}  allowFullScreen></iframe>
+                <iframe width="560" height="315" src={"https://www.youtube.com/embed/"+(vid?vid:"")}  allowFullScreen></iframe>
               </div>
               <div className="ai">
                 <div className="searchBox">
@@ -94,8 +70,13 @@ Type "clear()" to clear the box below' onKeyUp={handleAiSearchBox} ref={aiRef}><
               </div>
             </div>
             <div className="EditorPageRight">
+                <div className="loadingDiv">
+                  {( loading || updateLoading) && <img src="/loader.gif" alt="" /> }
+                  
+                </div>
                 <div className="editorBox">
-                    <Editor editable={!videoError} initialContent={undefined}/>
+                    {!loading && !error && <Editor editable={!error} initialContent={content} onchange={update}/>}
+                    {loading && <div className="loader"><img src="/loader.gif" alt="" /></div>}
                 </div>
             </div>
             <Toaster />

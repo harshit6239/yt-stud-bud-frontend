@@ -24,11 +24,22 @@ textarea{
 textarea:focus{
     outline: none;
 }
+.loadingDiv{
+    height: 5%;
+    display: flex;
+    justify-content: end;
+}
+.loadingDiv img{
+    height: 100%
+}
 .editorBox{
     margin-left: 10px;
-    height: 100%;
+    height: 95%;
     border: none;
     overflow: scroll;
+    /* border: 1px solid white; */
+    border-radius: 12px;
+    padding-top: 10px;
 }
 iframe{
     width: 100%;
@@ -102,6 +113,13 @@ button:hover{
 .qna{
     padding: 0.5rem;
     border-bottom: 1px solid white;
+}
+.loader{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

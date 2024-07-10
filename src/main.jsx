@@ -28,7 +28,7 @@ const BrowserRouter = createBrowserRouter([
     </>,
   },
   {
-    path: "/editor/:vid",
+    path: "/editor/:id",
     element: <>
       <Navbar/>
       <pages.editorPage/>

@@ -15,6 +15,8 @@ const login = () => {
   useEffect(()=>{
     validateToken().then((res) => {
       navigate('/home');
+    }).catch((err) => {
+      return;
     });
   },[]);
 
@@ -24,7 +26,6 @@ const login = () => {
     const formData = new FormData(form);
     loginReq({ email: formData.get('email'), password: formData.get('password') }).then((res) => {
       if(res.status === 200) {
-        console.log(res.data);
         navigate('/home');
       }
     }).catch((err) => {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ytImageUrl } from "../utils/ytImageUrl";
 import { Link } from "react-router-dom";
 import { createFolder } from "../api/createFolder";
+import { createNote } from "../api/createNote";
 
 const ItemList = ({ notes, folders, parent, loading, toast }) => {
     const navigate = useNavigate();
@@ -34,7 +35,6 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
             });
             return;
         }
-        console.log(url);
         if (url.hostname !== "www.youtube.com") {
             toast.error("Enter a valid youtube url", {
                 position: "top-right",
@@ -43,13 +43,23 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
         }
         const videoId = url.searchParams.get("v");
         if (!videoId) {
-            toast.error("Enter a valid youtube url", {
+            toast.error("Enter a valid youtube video url", {
                 position: "top-right",
             });
             return;
         }
-        console.log(parent);
-        navigate(`/editor/${videoId}`, {parent} );
+        createNote(parent, videoId).then((res) => {
+        }).catch((err) => {
+            if(err.message === "Invalid token"){
+                navigate("/login");
+                return;
+            }
+            toast.error(err.message, {
+                position: "top-right",
+            });
+        });
+
+        // navigate(`/editor/${videoId}`, {state: {parent, videoId}} ); 
     };
 
 
@@ -70,11 +80,14 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
             }
             createFolder(parent, newFolderValue.trim())
                 .then((res) => {
-                    console.log(res.folder);
                     folders.push(res.folder);
                     setCreateFolderBtn(false);
                 })
                 .catch((err) => {
+                    if(err.message === "Invalid token"){
+                        navigate("/login");
+                        return;
+                    }
                     toast.error(err.message, {
                         position: "top-right",
                     })
@@ -148,14 +161,14 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
                     notes.map((note) => {
                         return (
                             <Link
-                                to={`/editor/${note.id}`}
+                                to={`/editor/${note.noteId._id}`}
                                 className="item"
-                                key={note.id}
+                                key={note.noteId._id}
                             >
                                 <img
-                                    src={ytImageUrl(note.id)}
+                                    src={ytImageUrl(note.noteId.videoId)}
                                     alt="thumbnail"
-                                    key={note.id}
+                                    key={note.noteId._id}
                                 />
                             </Link>
                         );
