@@ -116,3 +116,24 @@ input:focus{
 .error img{
     width: 25%;
 }
+.contextMenu{
+    background-color: #fff;
+    height: max-content;
+    width: 200px;
+    position: absolute;
+    color: black;
+    padding: 1rem;
+    border-radius: 10px;
+}
+.contextMenu .unactive{
+    color: grey;
+}
+.contextMenu div{
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+    border-radius: 8px;
+}
+.contextMenu div:hover{
+    cursor: pointer;
+    background-color: #f1f1f1;
+}

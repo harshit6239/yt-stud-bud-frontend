@@ -5,19 +5,46 @@ import { ytImageUrl } from "../utils/ytImageUrl";
 import { Link } from "react-router-dom";
 import { createFolder } from "../api/createFolder";
 import { createNote } from "../api/createNote";
+import { deleteNote } from "../api/deleteNote";
+import { deleteFolder } from "../api/deleteFolder";
+import ContextMenu from "./ContextMenu";
 
-const ItemList = ({ notes, folders, parent, loading, toast }) => {
+const ItemList = ({ notes, folders, parent, loading, toast, refetch }) => {
     const navigate = useNavigate();
     const newFolderInputRef = useRef();
     const [newNoteValue, setNewNoteValue] = useState("");
     const [newFolderValue, setNewFolderValue] = useState("");
     const [createFolderBtn, setCreateFolderBtn] = useState(false);
+    const initialContextMenu = {
+        show: false,
+        x: 0,
+        y: 0,
+        isFolder: false,
+        id: undefined
+    };
+    const [contextMenu, setContextMenu] = useState(initialContextMenu);
 
     useEffect(() => {
         if (createFolderBtn) {
             newFolderInputRef.current.focus();
         }
     }, [createFolderBtn]);
+    
+    const handleContextMenu = (e, isFolder, id) => {
+        e.preventDefault();
+        const { pageX, pageY } = e;
+        setContextMenu({
+            show: true,
+            x: pageX,
+            y: pageY,
+            isFolder: isFolder,
+            id: id
+        });
+    };
+
+    const closeContextMenu = () => {
+        setContextMenu(initialContextMenu);
+    };
 
     const handleNewNote = () => {
         if (newNoteValue.trim() === ""){
@@ -49,6 +76,8 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
             return;
         }
         createNote(parent, videoId).then((res) => {
+            notes.push(res.note);
+            navigate(`/editor/${res.note.noteId._id}`); 
         }).catch((err) => {
             if(err.message === "Invalid token"){
                 navigate("/login");
@@ -59,9 +88,41 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
             });
         });
 
-        // navigate(`/editor/${videoId}`, {state: {parent, videoId}} ); 
     };
 
+    const handleDelete = (id, isFolder) => {
+        if(isFolder){
+            deleteFolder(id).then((res) => {
+                refetch(parent);
+                toast.success("Folder deleted successfully", {
+                    position: "top-right",
+                });
+            }).catch((err) => {
+                if(err.message === "Invalid token"){
+                    navigate("/login");
+                    return;
+                }
+                toast.error(err.message, {
+                    position: "top-right",
+                });
+            });
+        }else{
+            deleteNote(id).then((res) => {
+                refetch(parent);
+                toast.success("Note deleted successfully", {
+                    position: "top-right",
+                });
+            }).catch((err) => {
+                if(err.message === "Invalid token"){
+                    navigate("/login");
+                    return;
+                }
+                toast.error(err.message, {
+                    position: "top-right",
+                });
+            });
+        }
+    };
 
     const handleNewFolderName = (e) => {
         if(e.key === "Escape"){
@@ -148,6 +209,7 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
                                 to={`/home/folder/${folder.folderId._id}`}
                                 className="item"
                                 key={folder.folderId._id}
+                                onContextMenu={(e)=>{handleContextMenu(e, true, folder.folderId._id)}}
                             >
                                 <img
                                     src="/folder-icon.webp"
@@ -164,6 +226,7 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
                                 to={`/editor/${note.noteId._id}`}
                                 className="item"
                                 key={note.noteId._id}
+                                onContextMenu={(e)=>{handleContextMenu(e, false, note.noteId._id)}}
                             >
                                 <img
                                     src={ytImageUrl(note.noteId.videoId)}
@@ -185,6 +248,7 @@ const ItemList = ({ notes, folders, parent, loading, toast }) => {
                         </div>
                     )}
             </div>
+            {contextMenu.show && <ContextMenu x={contextMenu.x} y={contextMenu.y} closeContextMenu={closeContextMenu} isFolder={contextMenu.isFolder} id={contextMenu.id} handleDelete={handleDelete}/>}
         </>
     );
 };

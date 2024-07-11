@@ -20,6 +20,7 @@ function useItemFetch(folder) {
     
     const refetch = (fldr) => {
         setLoading(true);
+        if(!fldr) fldr = folder;
         getItems(fldr).then((res)=>{
             setError(null);
             setItems(res);
