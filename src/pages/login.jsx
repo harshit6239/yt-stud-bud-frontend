@@ -16,7 +16,7 @@ const login = () => {
     validateToken().then((res) => {
       navigate('/home');
     }).catch((err) => {
-      return;
+      // return;
     });
   },[]);
 
