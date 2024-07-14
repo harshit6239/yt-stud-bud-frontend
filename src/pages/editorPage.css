@@ -6,6 +6,9 @@
     padding: 0;
     margin: 0;
 }
+.container *::-webkit-scrollbar{
+    display: none;
+}
 .EditorPageLeft{
     height: 100%;
     width: 50%;

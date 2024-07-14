@@ -26,9 +26,9 @@ function useNoteFetch(id) {
         }
     },[id])
     
-    const update = (content) => {
+    const update = (content, markdown) => {
         setUpdateLoading(true);
-        updateNote(id, content).then(()=>{
+        updateNote(id, content, markdown).then(()=>{
             setUpdateError(null);
         }).catch((err)=>{
             setUpdateError(err);

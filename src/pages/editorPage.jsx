@@ -1,14 +1,14 @@
-import React, { useLayoutEffect, useState, useRef } from 'react'
-import { useParams } from "react-router-dom";
+import React, { useState, useRef } from 'react'
+import { useNavigate, useParams } from "react-router-dom";
 import Markdown from 'markdown-to-jsx';
 import { search } from '../api/gemini';
-import { getNote } from '../api/getNote';
 import Editor from '../components/Editor';
 import toast, { Toaster } from 'react-hot-toast';
 import './editorPage.css'; 
 import useNoteFetch from '../hooks/useNoteFetch';
 
 function editorPage() {
+  const navigate = useNavigate();
   const aiRef = useRef(null);
   const playerRef = useRef(null);
   const { id } = useParams();
